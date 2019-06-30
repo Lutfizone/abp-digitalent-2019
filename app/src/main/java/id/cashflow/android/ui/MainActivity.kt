@@ -15,25 +15,43 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //custom toolbar
+//        setSupportActionBar(toolbar)
+
+        //method untuk toolbar
         initView()
+        //method untuk fragment
         initFragment()
     }
 
-    private fun initFragment(){
+    private fun initFragment() {
         val mainFragment = MainFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.flFragment, mainFragment)
             .commit()
     }
 
-    private fun initView(){
+    private fun settingFragment() {
+        val settingFragment = SettingFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.flFragment, settingFragment)
+            .commit()
+    }
+
+    private fun notificationFragment() {
+        val notificationFragment = NotificationFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.flFragment, notificationFragment)
+            .commit()
+    }
+
+    private fun initView() {
+
         ivNotification.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Notification", Toast.LENGTH_SHORT).show()
-        }
-        ivSetting.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Setting", Toast.LENGTH_SHORT).show()
+            onNotificationClick()
         }
 
+        //Popup menu
         ivSetting.setOnClickListener { view ->
             val popup = PopupMenu(this@MainActivity, view)
             val inflater: MenuInflater = popup.menuInflater
@@ -41,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             popup.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_setting -> {
-                        Toast.makeText(this@MainActivity, "setting", Toast.LENGTH_SHORT).show()
+                        onSettingClick()
                         true
                     }
                     R.id.action_logout -> {
@@ -55,12 +73,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onLogoutClick(){
-        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-        finish()
+    private fun onNotificationClick() {
+        notificationFragment()
     }
 
 
+    private fun onSettingClick() {
+        settingFragment()
+    }
+
+    private fun onLogoutClick() {
+        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+        finish()
+
+
+    }
 }
 
 //        println("Halo Bandung!")
